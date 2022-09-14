@@ -1,3 +1,14 @@
+# Reglas de la kata
+Following a strict red->green->refactor loop, I am breaking requirements down into the following testables:
+
+- [ ] X always goes first
+- [ ] A Player can not play twice
+- [ ] Players alternate placing X’s and O’s on the board
+- [ ] Players cannot play on a played position
+- [ ] A player with 3 X’s (vertically, horizontally or diagonally) wins the game.
+- [ ] If all 9 squares are filled and neither player achieves 3 in a row, the game is a draw.
+- [ ] A player with 3 O’s in a row (vertically, horizontally or diagonally) wins the game.
+
 # Base para hacer tests
 
 Configuración básica para empezar a hacer una kata o aprender a hacer tests en los siguientes lenguajes:
