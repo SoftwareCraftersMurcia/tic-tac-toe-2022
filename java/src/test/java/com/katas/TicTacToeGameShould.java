@@ -32,6 +32,15 @@ public class TicTacToeGameShould {
     ticTacToeGame.play(Player.X, 0, 0);
 
     assertThatThrownBy(() -> ticTacToeGame.play(Player.X, 0, 1))
-    .isInstanceOf(PlayerCannotPlayTwiceException.class);
+      .isInstanceOf(PlayerCannotPlayTwiceException.class);
+  }
+
+  @Test
+  public void throw_an_exception_when_O_player_play_twice() {
+    ticTacToeGame.play(Player.X, 0, 0);
+    ticTacToeGame.play(Player.O, 0, 1);
+
+    assertThatThrownBy(() -> ticTacToeGame.play(Player.O, 0, 2))
+      .isInstanceOf(PlayerCannotPlayTwiceException.class);
   }
 }

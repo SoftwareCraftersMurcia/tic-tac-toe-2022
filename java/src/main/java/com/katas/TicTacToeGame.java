@@ -3,13 +3,15 @@ package com.katas;
 public class TicTacToeGame {
 
   private Player currentPlayer;
+  private int currentTurn;
 
   public TicTacToeGame() {
     this.currentPlayer = Player.X;
+    this.currentTurn = 0;
   }
 
   public void play(Player player, int row, int column) {
-    if (player == Player.O) {
+    if (player == Player.O && currentTurn == 0) {
       throw new XPlayerShouldGoFirstException();
     }
 
@@ -17,7 +19,13 @@ public class TicTacToeGame {
       throw new PlayerCannotPlayTwiceException();
     }
 
-    currentPlayer = Player.O;
+    if (currentPlayer == Player.X) {
+      currentPlayer = Player.O;
+    } else {
+      currentPlayer = Player.X;
+    }
+
+    currentTurn++;
   }
 }
 
