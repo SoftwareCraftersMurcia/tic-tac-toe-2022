@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class TicTacToeGameTest {
+public class TicTacToeGameShould {
 
   private TicTacToeGame ticTacToeGame;
 
@@ -15,15 +15,15 @@ public class TicTacToeGameTest {
   }
 
   @Test
-  public void should_throw_exception_when_O_user_plays_first() {
+  public void throw_an_exception_when_O_player_goes_first() {
     assertThatThrownBy(() -> {
       ticTacToeGame.play(Player.O, 0, 0);
     })
-      .isInstanceOf(XUserShouldGoFirstException.class);
+      .isInstanceOf(XPlayerShouldGoFirstException.class);
   }
 
   @Test
-  public void should_not_throw_exception_when_X_user_plays_first() {
+  public void not_throw_an_exception_when_X_player_goes_first() {
     ticTacToeGame.play(Player.X, 0, 0);
   }
 }
