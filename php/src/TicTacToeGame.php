@@ -16,6 +16,13 @@ final class TicTacToeGame
             throw new RuntimeException('Invalid current Player');
         }
 
+        $this->switchCurrentPlayer();
+
         return true;
+    }
+
+    private function switchCurrentPlayer(): void
+    {
+        $this->currentPlayer = ($this->currentPlayer === 'X') ? 'O' : 'X';
     }
 }

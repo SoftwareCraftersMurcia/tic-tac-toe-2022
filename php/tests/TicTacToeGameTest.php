@@ -12,7 +12,7 @@ final class TicTacToeGameTest extends TestCase
 {
     /**
      * - [x] X always goes first
-     * - [ ] A Player can not play twice
+     * - [X] A Player can not play twice
      * - [ ] Players alternate placing X’s and O’s on the board
      * - [ ] Players cannot play on a played position
      * - [ ] A player with 3 X’s (vertically, horizontally or diagonally) wins the game.
@@ -24,7 +24,19 @@ final class TicTacToeGameTest extends TestCase
     public function assert_x_always_goes_first(): void
     {
         $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Invalid current Player');
 
         (new TicTacToeGame())->play('O');
+    }
+
+    /** @test */
+    public function assert_a_player_cant_play_twice(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Invalid current Player');
+
+        $ticTacToeGame = new TicTacToeGame();
+        $ticTacToeGame->play('X');
+        $ticTacToeGame->play('X');
     }
 }
