@@ -13,4 +13,12 @@ final class TicTacToeTest extends TestCase
 
         self::assertSame('X', $game->play(0, 0));
     }
+
+    public function test_o_always_goes_second(): void
+    {
+        $game = new TicTacToe();
+        $game->play(0, 0);
+
+        self::assertSame('O', $game->play(0, 1));
+    }
 }
