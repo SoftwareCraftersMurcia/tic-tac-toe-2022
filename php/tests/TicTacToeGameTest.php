@@ -11,7 +11,7 @@ use RuntimeException;
 final class TicTacToeGameTest extends TestCase
 {
     /**
-     * - [x] X always goes first
+     * - [X] X always goes first
      * - [X] A Player can not play twice
      * - [X] Players alternate placing X’s and O’s on the board
      * - [ ] Players cannot play on a played position
@@ -29,17 +29,33 @@ final class TicTacToeGameTest extends TestCase
 
     /**
      * @test
-     * @dataProvider playerDataProvider()
+     *
+     * @dataProvider playerDataProvider
      */
-    public function XX(array $players): void
+    public function assert_players_play_alternatively(array $players): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid current Player');
 
         $ticTacToeGame = new TicTacToeGame();
 
+        $i = 0;
         foreach ($players as $player) {
-            $ticTacToeGame->play($player);
+            $ticTacToeGame->play($player, [0, $i++]);
         }
+    }
+
+    /**
+     * @test
+     */
+    public function assert_players_cannot_play_twice_in_same_position(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Player cannot play twice in same position');
+
+        $ticTacToeGame = new TicTacToeGame();
+
+        $ticTacToeGame->play('X', [0, 0]);
+        $ticTacToeGame->play('O', [0, 0]);
     }
 }
