@@ -11,7 +11,7 @@ public class TicTacToeGame {
   }
 
   public void play(Player player, int row, int column) {
-    if (player == Player.O && currentTurn == 0) {
+    if (isFirstTurn() && player.isO()) {
       throw new XPlayerShouldGoFirstException();
     }
 
@@ -22,6 +22,10 @@ public class TicTacToeGame {
     currentPlayer = player.opposite();
 
     currentTurn++;
+  }
+
+  private boolean isFirstTurn() {
+    return currentTurn == 0;
   }
 }
 

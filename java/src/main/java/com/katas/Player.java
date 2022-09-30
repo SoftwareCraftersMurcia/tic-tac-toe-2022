@@ -11,4 +11,8 @@ public enum Player {
       return Player.X;
     }
   }
+
+  public boolean isO() {
+    return this == Player.O;
+  }
 }
