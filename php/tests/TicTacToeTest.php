@@ -41,4 +41,13 @@ final class TicTacToeTest extends TestCase
         yield 'posX too big' => [3, 0];
         yield 'posY too big' => [0, 3];
     }
+
+    public function test_two_players_cannot_play_the_same_position(): void
+    {
+        $this->expectExceptionMessage('This position is occupied');
+
+        $game = new TicTacToe();
+        $game->play(0, 0);
+        $game->play(0, 0);
+    }
 }

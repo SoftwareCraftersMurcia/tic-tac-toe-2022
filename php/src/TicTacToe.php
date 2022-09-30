@@ -9,6 +9,7 @@ use RuntimeException;
 final class TicTacToe
 {
     private int $count = 0;
+    private array $board = [];
 
     /**
      * Plays the current player in the position coordinates
@@ -22,6 +23,14 @@ final class TicTacToe
 
         $this->count++;
 
-        return $this->count % 2 === 1 ? 'X' : 'O';
+        $currentPlayer = $this->count % 2 === 1 ? 'X' : 'O';
+
+        if (isset($this->board[$posX][$posY])) {
+            throw new RuntimeException('This position is occupied');
+        }
+
+        $this->board[$posX][$posY] = $currentPlayer;
+
+        return $currentPlayer;
     }
 }
