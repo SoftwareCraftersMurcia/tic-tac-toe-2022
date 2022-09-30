@@ -20,18 +20,10 @@ final class TicTacToe
      */
     public function play(int $posX, int $posY): string
     {
-        if ($posX < 0 || $posX > 2 || $posY < 0 || $posY > 2) {
-            throw new RuntimeException('Out of board limits');
-        }
+        $this->checkConstraints($posX, $posY);
 
         $currentPlayer = $this->currentPlayer();
-
-        if (isset($this->board[$posX][$posY])) {
-            throw new RuntimeException('This position is occupied');
-        }
-
         $this->board[$posX][$posY] = $currentPlayer;
-
         $this->changePlayer();
 
         return $currentPlayer;
@@ -45,5 +37,25 @@ final class TicTacToe
     private function changePlayer(): void
     {
         $this->count++;
+    }
+
+    private function checkConstraints(int $posX, int $posY): void
+    {
+        $this->checkBoundaries($posX, $posY);
+        $this->checkFreePosition($posX, $posY);
+    }
+
+    private function checkBoundaries(int $posX, int $posY): void
+    {
+        if ($posX < 0 || $posX > 2 || $posY < 0 || $posY > 2) {
+            throw new RuntimeException('Out of board limits');
+        }
+    }
+
+    private function checkFreePosition(int $posX, int $posY): void
+    {
+        if (isset($this->board[$posX][$posY])) {
+            throw new RuntimeException('This position is occupied');
+        }
     }
 }
