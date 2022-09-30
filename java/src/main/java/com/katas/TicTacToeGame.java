@@ -2,8 +2,8 @@ package com.katas;
 
 public class TicTacToeGame {
 
-  public void play(String player, int row, int column) {
-    if (player.equals("O")) {
+  public void play(Player player, int row, int column) {
+    if (player == Player.O) {
       throw new XUserShouldGoFirstException();
     }
   }

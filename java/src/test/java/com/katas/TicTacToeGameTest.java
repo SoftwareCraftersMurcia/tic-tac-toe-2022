@@ -17,13 +17,13 @@ public class TicTacToeGameTest {
   @Test
   public void should_throw_exception_when_O_user_plays_first() {
     assertThatThrownBy(() -> {
-      ticTacToeGame.play("O", 0, 0);
+      ticTacToeGame.play(Player.O, 0, 0);
     })
       .isInstanceOf(XUserShouldGoFirstException.class);
   }
 
   @Test
   public void should_not_throw_exception_when_X_user_plays_first() {
-    ticTacToeGame.play("X", 0, 0);
+    ticTacToeGame.play(Player.X, 0, 0);
   }
 }
