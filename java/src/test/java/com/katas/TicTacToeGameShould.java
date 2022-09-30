@@ -26,4 +26,12 @@ public class TicTacToeGameShould {
   public void not_throw_an_exception_when_X_player_goes_first() {
     ticTacToeGame.play(Player.X, 0, 0);
   }
+
+  @Test
+  public void throw_an_exception_when_X_player_play_twice() {
+    ticTacToeGame.play(Player.X, 0, 0);
+
+    assertThatThrownBy(() -> ticTacToeGame.play(Player.X, 0, 1))
+    .isInstanceOf(PlayerCannotPlayTwiceException.class);
+  }
 }
