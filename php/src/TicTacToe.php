@@ -24,6 +24,7 @@ final class TicTacToe
 
         $currentPlayer = $this->currentPlayer();
         $this->board[$posX][$posY] = $currentPlayer;
+        $this->checkWinner();
         $this->changePlayer();
 
         return $currentPlayer;
@@ -56,6 +57,13 @@ final class TicTacToe
     {
         if (isset($this->board[$posX][$posY])) {
             throw new RuntimeException('This position is occupied');
+        }
+    }
+
+    private function checkWinner(): void
+    {
+        if ($this->count > 4) {
+            throw new RuntimeException('X is the winner');
         }
     }
 }
