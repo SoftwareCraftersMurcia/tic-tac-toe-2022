@@ -51,7 +51,7 @@ final class TicTacToeTest extends TestCase
         $game->play(0, 0);
     }
 
-    public function test_horizontal_line_wins_the_game(): void
+    public function test_horizontal_first_line_wins_the_game(): void
     {
         $this->expectExceptionMessage('X is the winner');
 

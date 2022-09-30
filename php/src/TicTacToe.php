@@ -62,8 +62,15 @@ final class TicTacToe
 
     private function checkWinner(): void
     {
-        if ($this->count > 4) {
-            throw new RuntimeException('X is the winner');
+        $firstPositionInTheFirstRow = $this->board[0][0] ?? null;
+        $secondPositionInTheFirstRow = $this->board[1][0] ?? null;
+        $thirdPositionInTheFirstRow = $this->board[2][0] ?? null;
+
+        if (
+            $firstPositionInTheFirstRow === $secondPositionInTheFirstRow
+            && $firstPositionInTheFirstRow === $thirdPositionInTheFirstRow
+        ) {
+            throw new RuntimeException($this->currentPlayer() . ' is the winner');
         }
     }
 }
