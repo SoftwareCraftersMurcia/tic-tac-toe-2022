@@ -21,4 +21,24 @@ final class TicTacToeTest extends TestCase
 
         self::assertSame('O', $game->play(0, 1));
     }
+
+    /**
+     * @dataProvider provideCheckBoardLimits
+     */
+    public function test_check_board_limits(int $posX, int $posY): void
+    {
+        $this->expectExceptionMessage('Out of board limits');
+
+        $game = new TicTacToe();
+        $game->play($posX, $posY);
+    }
+
+    public function provideCheckBoardLimits(): iterable
+    {
+        yield 'posX too low' => [-1, 0];
+        yield 'posY too low' => [0, -1];
+
+        yield 'posX too big' => [3, 0];
+        yield 'posY too big' => [0, 3];
+    }
 }
