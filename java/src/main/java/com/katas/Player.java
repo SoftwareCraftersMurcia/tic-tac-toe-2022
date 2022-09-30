@@ -2,5 +2,13 @@ package com.katas;
 
 public enum Player {
   X,
-  O
+  O;
+
+  public Player opposite() {
+    if (this == Player.X) {
+      return Player.O;
+    } else {
+      return Player.X;
+    }
+  }
 }

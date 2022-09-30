@@ -19,11 +19,7 @@ public class TicTacToeGame {
       throw new PlayerCannotPlayTwiceException();
     }
 
-    if (currentPlayer == Player.X) {
-      currentPlayer = Player.O;
-    } else {
-      currentPlayer = Player.X;
-    }
+    currentPlayer = player.opposite();
 
     currentTurn++;
   }
