@@ -8,7 +8,10 @@ use RuntimeException;
 
 final class TicTacToe
 {
-    private int $count = 0;
+    public const PLAYER_X = 'X';
+    public const PLAYER_O = 'O';
+
+    private int $count = 1;
     private array $board = [];
 
     /**
@@ -21,9 +24,7 @@ final class TicTacToe
             throw new RuntimeException('Out of board limits');
         }
 
-        $this->count++;
-
-        $currentPlayer = $this->count % 2 === 1 ? 'X' : 'O';
+        $currentPlayer = $this->currentPlayer();
 
         if (isset($this->board[$posX][$posY])) {
             throw new RuntimeException('This position is occupied');
@@ -31,6 +32,18 @@ final class TicTacToe
 
         $this->board[$posX][$posY] = $currentPlayer;
 
+        $this->changePlayer();
+
         return $currentPlayer;
+    }
+
+    private function currentPlayer(): string
+    {
+        return $this->count % 2 === 1 ? self::PLAYER_X : self::PLAYER_O;
+    }
+
+    private function changePlayer(): void
+    {
+        $this->count++;
     }
 }
