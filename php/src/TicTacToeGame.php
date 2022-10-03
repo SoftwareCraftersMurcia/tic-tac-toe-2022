@@ -8,6 +8,29 @@ use RuntimeException;
 
 final class TicTacToeGame
 {
+    private const SOLUTIONS = [
+        // Horizontal
+        ['0:0', '0:1', '0:2'],
+        ['1:0', '1:1', '1:2'],
+        ['2:0', '2:1', '2:2'],
+        // Vertical
+        ['0:0', '1:0', '2:0'],
+        ['0:1', '1:1', '2:1'],
+        ['0:2', '1:2', '2:2'],
+        // Diagonal
+        ['0:0', '1:1', '2:2'],
+        ['2:0', '1:1', '0:2'],
+    ];
+
+    public const STATUS_IN_PROGRESS = 'In progress';
+
+    public const STATUS_DRAW = 'Draw';
+
+    public const STATUS_PLAYER_WINS = [
+        'X' => 'X wins',
+        'O' => 'O wins',
+    ];
+
     // Board representation:
     // $board = [
     //     'X' => [[1, 1], [0, 0]],
@@ -17,22 +40,21 @@ final class TicTacToeGame
 
     private string $currentPlayer = 'X';
 
-    public function play(string $currentPlayer, Position $selectedPosition): bool
+    public function play(string $currentPlayer, Position $selectedPosition): string
     {
         $this->checkCurrentPlayer($currentPlayer);
-        $this->checkPositionIsAvailable($selectedPosition);
-        $this->board[$currentPlayer][] = $selectedPosition;
 
-        // check current status & assert there is some winner...
+        $this->checkPositionIsAvailable($selectedPosition);
+
+        $this->addPositionToBoard($selectedPosition);
+
+        if ($this->checkPlayerWins()) {
+            return self::STATUS_PLAYER_WINS[$this->currentPlayer];
+        }
 
         $this->switchCurrentPlayer();
 
-        return true;
-    }
-
-    private function switchCurrentPlayer(): void
-    {
-        $this->currentPlayer = ($this->currentPlayer === 'X') ? 'O' : 'X';
+        return self::STATUS_IN_PROGRESS;
     }
 
     private function checkCurrentPlayer(string $currentPlayer): void
@@ -51,5 +73,47 @@ final class TicTacToeGame
                 }
             }
         }
+    }
+
+    private function addPositionToBoard(Position $selectedPosition): void
+    {
+        $this->board[$this->currentPlayer][] = $selectedPosition;
+    }
+
+    private function checkPlayerWins(): bool
+    {
+        $positions = $this->board[$this->currentPlayer];
+        if (count($positions) < 3) {
+            return false;
+        }
+
+        return $this->calculatePlayerWins($positions);
+    }
+
+    /**
+     * @param list<Position> $positions
+     */
+    private function calculatePlayerWins(array $positions): bool
+    {
+        foreach (self::SOLUTIONS as $possibleSolution) {
+            $matches = 0;
+            foreach ($positions as $position) {
+                if (!in_array($position->__toString(), $possibleSolution)) {
+                    continue;
+                }
+                $matches++;
+            }
+
+            if ($matches === 3) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function switchCurrentPlayer(): void
+    {
+        $this->currentPlayer = ($this->currentPlayer === 'X') ? 'O' : 'X';
     }
 }

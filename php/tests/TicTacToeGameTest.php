@@ -16,9 +16,9 @@ final class TicTacToeGameTest extends TestCase
      * - [X] A Player can not play twice
      * - [X] Players alternate placing X’s and O’s on the board
      * - [X] Players cannot play on a played position
-     * - [ ] A player with 3 X’s (vertically, horizontally or diagonally) wins the game.
+     * - [X] A player with 3 X’s (vertically, horizontally or diagonally) wins the game.
+     * - [X] A player with 3 O’s (vertically, horizontally or diagonally) wins the game.
      * - [ ] If all 9 squares are filled and neither player achieves 3 in a row, the game is a draw.
-     * - [ ] A player with 3 O’s in a row (vertically, horizontally or diagonally) wins the game.
      */
 
     /**
@@ -74,5 +74,52 @@ final class TicTacToeGameTest extends TestCase
 
         $ticTacToeGame->play('X', new Position(0, 0));
         $ticTacToeGame->play('O', new Position(0, 0));
+    }
+
+    /**
+     *  > Horizontal
+     *   ___ ___ ___
+     *  | x | x | x |
+     *  | o |   |   |
+     *  | o |   |   |
+     *   ¯¯¯ ¯¯¯ ¯¯¯
+     *
+     * @test
+     */
+    public function assert_x_player_with_three_in_a_row_wins(): void
+    {
+        $ticTacToeGame = new TicTacToeGame();
+
+        $ticTacToeGame->play('X', new Position(0, 0));
+        $ticTacToeGame->play('O', new Position(1, 0));
+        $ticTacToeGame->play('X', new Position(0, 1));
+        $ticTacToeGame->play('O', new Position(2, 0));
+        $status = $ticTacToeGame->play('X', new Position(0, 2));
+
+        self::assertSame(TicTacToeGame::STATUS_PLAYER_WINS['X'], $status);
+    }
+
+    /**
+     *  > Horizontal
+     *   ___ ___ ___
+     *  | o | o | o |
+     *  | x | x |   |
+     *  | x |   |   |
+     *   ¯¯¯ ¯¯¯ ¯¯¯
+     *
+     * @test
+     */
+    public function assert_o_player_with_three_in_a_row_wins(): void
+    {
+        $ticTacToeGame = new TicTacToeGame();
+
+        $ticTacToeGame->play('X', new Position(1, 0));
+        $ticTacToeGame->play('O', new Position(0, 0));
+        $ticTacToeGame->play('X', new Position(1, 1));
+        $ticTacToeGame->play('O', new Position(0, 1));
+        $ticTacToeGame->play('X', new Position(2, 0));
+        $status = $ticTacToeGame->play('O', new Position(0, 2));
+
+        self::assertSame(TicTacToeGame::STATUS_PLAYER_WINS['O'], $status);
     }
 }

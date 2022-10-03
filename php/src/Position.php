@@ -24,16 +24,6 @@ final class Position
         }
     }
 
-    public function getX(): int
-    {
-        return $this->x;
-    }
-
-    public function getY(): int
-    {
-        return $this->y;
-    }
-
     public function __toString(): string
     {
         return sprintf('%d:%d', $this->x, $this->y);
