@@ -21,29 +21,45 @@ final class TicTacToeGameTest extends TestCase
      * - [ ] A player with 3 O’s in a row (vertically, horizontally or diagonally) wins the game.
      */
 
-    public function playerDataProvider(): iterable
-    {
-        yield 'assert_x_always_goes_first' => [['O']];
-        yield 'assert_a_player_cant_play_twice' => [['X', 'X']];
-        yield 'assert_a_player_should_play_alternative' => [['X', 'O', 'O']];
-    }
-
     /**
      * @test
      *
      * @dataProvider playerDataProvider
      */
-    public function assert_players_play_alternatively(array $players): void
+    public function assert_players_play_alternatively(array $movements): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid current Player');
 
         $ticTacToeGame = new TicTacToeGame();
 
-        $i = 0;
-        foreach ($players as $player) {
-            $ticTacToeGame->play($player, new Position(0, $i++));
+        foreach ($movements as $movement) {
+            $ticTacToeGame->play(...$movement);
         }
+    }
+
+    public function playerDataProvider(): iterable
+    {
+        yield 'assert_x_always_goes_first' => [
+            [
+                ['O', new Position(0, 0)],
+            ],
+        ];
+
+        yield 'assert_a_player_cant_play_twice' => [
+            [
+                ['X', new Position(0, 0)],
+                ['X', new Position(0, 1)],
+            ],
+        ];
+
+        yield 'assert_a_player_should_play_alternative' => [
+            [
+                ['X', new Position(0, 0)],
+                ['O', new Position(0, 1)],
+                ['O', new Position(1, 0)],
+            ],
+        ];
     }
 
     /**
