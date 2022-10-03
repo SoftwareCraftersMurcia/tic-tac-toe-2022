@@ -52,9 +52,18 @@ final class TicTacToeGame
             return self::STATUS_PLAYER_WINS[$this->currentPlayer];
         }
 
+        if ($this->checkIfDraw()) {
+            return self::STATUS_DRAW;
+        }
+
         $this->switchCurrentPlayer();
 
         return self::STATUS_IN_PROGRESS;
+    }
+
+    private function checkIfDraw(): bool
+    {
+        return count($this->board['X']) + count($this->board['O']) === 9;
     }
 
     private function checkCurrentPlayer(string $currentPlayer): void
@@ -87,13 +96,13 @@ final class TicTacToeGame
             return false;
         }
 
-        return $this->calculatePlayerWins($positions);
+        return $this->calculateIfPlayerWins($positions);
     }
 
     /**
      * @param list<Position> $positions
      */
-    private function calculatePlayerWins(array $positions): bool
+    private function calculateIfPlayerWins(array $positions): bool
     {
         foreach (self::SOLUTIONS as $possibleSolution) {
             $matches = 0;
