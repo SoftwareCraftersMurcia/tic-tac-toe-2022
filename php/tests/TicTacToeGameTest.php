@@ -77,7 +77,6 @@ final class TicTacToeGameTest extends TestCase
     }
 
     /**
-     *  > Horizontal
      *   ___ ___ ___
      *  | x | x | x |
      *  | o |   |   |
@@ -100,7 +99,6 @@ final class TicTacToeGameTest extends TestCase
     }
 
     /**
-     *  > Horizontal
      *   ___ ___ ___
      *  | o | o | o |
      *  | x | x |   |
@@ -121,5 +119,106 @@ final class TicTacToeGameTest extends TestCase
         $status = $ticTacToeGame->play('O', new Position(0, 2));
 
         self::assertSame(TicTacToeGame::STATUS_PLAYER_WINS['O'], $status);
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider winPositionsDataProvider
+     */
+    public function assert_win_positions(array $movements): void
+    {
+        $ticTacToeGame = new TicTacToeGame();
+
+        $result = '';
+        $movement = '';
+        foreach ($movements as $movement) {
+            $result = $ticTacToeGame->play(...$movement);
+        }
+
+        self::assertSame($result, TicTacToeGame::STATUS_PLAYER_WINS[$movement[0]]);
+    }
+
+    public function winPositionsDataProvider(): iterable
+    {
+        yield 'horizontal 1st row' => [
+            [
+                ['X', new Position(0, 0)],
+                ['O', new Position(1, 0)],
+                ['X', new Position(0, 1)],
+                ['O', new Position(2, 0)],
+                ['X', new Position(0, 2)],
+            ],
+        ];
+
+        yield 'horizontal 2nd row' => [
+            [
+                ['X', new Position(1, 0)],
+                ['O', new Position(0, 0)],
+                ['X', new Position(1, 1)],
+                ['O', new Position(2, 0)],
+                ['X', new Position(1, 2)],
+            ],
+        ];
+
+        yield 'horizontal 3rd row' => [
+            [
+                ['X', new Position(2, 0)],
+                ['O', new Position(0, 0)],
+                ['X', new Position(2, 1)],
+                ['O', new Position(1, 2)],
+                ['X', new Position(2, 2)],
+            ],
+        ];
+
+        yield 'vertical 1st row' => [
+            [
+                ['X', new Position(0, 0)],
+                ['O', new Position(2, 0)],
+                ['X', new Position(0, 1)],
+                ['O', new Position(1, 2)],
+                ['X', new Position(0, 2)],
+            ],
+        ];
+
+        yield 'vertical 2nd row' => [
+            [
+                ['X', new Position(0, 1)],
+                ['O', new Position(0, 0)],
+                ['X', new Position(1, 1)],
+                ['O', new Position(2, 0)],
+                ['X', new Position(2, 1)],
+            ],
+        ];
+
+        yield 'vertical 3rd row' => [
+            [
+                ['X', new Position(0, 2)],
+                ['O', new Position(0, 0)],
+                ['X', new Position(1, 2)],
+                ['O', new Position(1, 0)],
+                ['X', new Position(2, 2)],
+            ],
+        ];
+
+        yield 'diagonal X' => [
+            [
+                ['X', new Position(0, 0)],
+                ['O', new Position(0, 1)],
+                ['X', new Position(1, 1)],
+                ['O', new Position(1, 0)],
+                ['X', new Position(2, 2)],
+            ],
+        ];
+
+        yield 'diagonal Y' => [
+            [
+                ['X', new Position(2, 0)],
+                ['O', new Position(0, 0)],
+                ['X', new Position(1, 1)],
+                ['O', new Position(1, 0)],
+                ['X', new Position(0, 2)],
+            ],
+        ];
     }
 }
